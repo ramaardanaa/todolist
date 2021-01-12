@@ -1,19 +1,36 @@
-import Home from './pages/Home'
+import React,{useEffect} from 'react'
+import {Home, AddTodo} from './pages'
 import { Navbar, Nav } from 'react-bootstrap'
-import { Provider } from 'react-redux'
-import store from './store/index'
-
+import {fetchTodo} from './store/action/todoAction'
+import {useDispatch} from 'react-redux'
+import {
+  Switch,
+  Route,
+  NavLink
+} from 'react-router-dom'
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(fetchTodo())
+  },[])
   return (
-    <Provider store={store}>
+    <>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand>Todo App</Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link>Home</Nav.Link>
+          <NavLink className="mx-2" to="/">Home</NavLink>
+          <NavLink className="mx-2"  to="/add">Add Todo</NavLink>
         </Nav>
       </Navbar>
-      <Home/>
-    </Provider>
+      <Switch>
+          <Route exact path="/">
+            <Home/>
+          </Route>
+          <Route path="/add">
+            <AddTodo/>
+          </Route>
+      </Switch>
+    </>
   );
 }
 
