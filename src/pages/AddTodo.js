@@ -2,7 +2,10 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import { Container, Row, Col,Form,Button } from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
+import swal from 'sweetalert'
+
 export default function AddTodo(){
+  let today = new Date();
   const dispatch = useDispatch()
   const history = useHistory()
   const todos = useSelector((state) => state.todoReducer.todos)
@@ -11,7 +14,7 @@ export default function AddTodo(){
     title: '',
 		description: '',
 		status: 0,
-		createdAt: Date.now()
+		createdAt: `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()} ${today.getHours()}:${today.getMinutes()<10 ? "0":""}${today.getMinutes()}`
   })
   
   function onChange(event){
@@ -29,6 +32,7 @@ export default function AddTodo(){
       type: "CREATE_TODO",
       payload: inputForm
     })
+    swal("Success", `Success add new todo!`, "success");
     history.push('/')
   }
   return(

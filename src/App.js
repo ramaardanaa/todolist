@@ -12,7 +12,7 @@ function App() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(fetchTodo())
-  },[])
+  },[dispatch])
   return (
     <>
       <Navbar bg="dark" variant="dark">
